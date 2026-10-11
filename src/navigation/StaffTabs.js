@@ -20,11 +20,16 @@ const labels = { Dashboard: 'Dashboard', FloorMap: 'Floor Map', LiveQueue: 'Live
 export default function StaffTabs() {
   return (
     <Tab.Navigator
+      sceneContainerStyle={{ backgroundColor: 'transparent' }}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#9AA0A6',
-        tabBarStyle: { backgroundColor: colors.ink, borderTopColor: colors.ink },
+        tabBarStyle: {
+          backgroundColor: 'rgba(26, 26, 26, 0.94)',
+          borderTopColor: 'rgba(255, 255, 255, 0.12)',
+          elevation: 8,
+        },
         tabBarLabel: labels[route.name],
         tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
         tabBarIcon: ({ focused, color, size }) => <Ionicons name={icons[route.name][focused ? 0 : 1]} size={size} color={color} />,

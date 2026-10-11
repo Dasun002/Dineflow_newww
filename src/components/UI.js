@@ -1,31 +1,64 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  ActivityIndicator,
+  StyleSheet,
+  ImageBackground,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme';
 
+const RESTAURANT_BG = require('../../assets/restaurant-bg.jpg');
+
+export function GlassBackground({ staff = false, children, style }) {
+  const overlayColor = staff
+    ? 'rgba(232, 236, 242, 0.68)'
+    : 'rgba(246, 240, 232, 0.55)';
+
+  return (
+    <ImageBackground
+      source={RESTAURANT_BG}
+      style={[st.flex, style]}
+      resizeMode="cover"
+      blurRadius={Platform.OS === 'ios' ? 14 : 10}
+    >
+      <View style={[st.flex, { backgroundColor: overlayColor }]}>
+        {children}
+      </View>
+    </ImageBackground>
+  );
+}
+
 export function Screen({ children, staff, title, subtitle, onBack, right, footer }) {
   return (
-    <SafeAreaView edges={['top']} style={[st.flex, { backgroundColor: staff ? colors.staffBg : colors.bg }]}>
-      {title ? (
-        <View style={st.header}>
-          {onBack ? (
-            <TouchableOpacity onPress={onBack} style={st.back} hitSlop={10}>
-              <Ionicons name="chevron-back" size={22} color={colors.ink} />
-            </TouchableOpacity>
-          ) : null}
-          <View style={st.flex}>
-            <Text style={st.title}>{title}</Text>
-            {subtitle ? <Text style={st.subtitle}>{subtitle}</Text> : null}
+    <GlassBackground staff={staff}>
+      <SafeAreaView edges={['top']} style={st.flex}>
+        {title ? (
+          <View style={st.header}>
+            {onBack ? (
+              <TouchableOpacity onPress={onBack} style={st.back} hitSlop={10}>
+                <Ionicons name="chevron-back" size={22} color={colors.ink} />
+              </TouchableOpacity>
+            ) : null}
+            <View style={st.flex}>
+              <Text style={st.title}>{title}</Text>
+              {subtitle ? <Text style={st.subtitle}>{subtitle}</Text> : null}
+            </View>
+            {right}
           </View>
-          {right}
-        </View>
-      ) : null}
-      <ScrollView style={st.flex} contentContainerStyle={st.body} keyboardShouldPersistTaps="handled">
-        {children}
-      </ScrollView>
-      {footer}
-    </SafeAreaView>
+        ) : null}
+        <ScrollView style={st.flex} contentContainerStyle={st.body} keyboardShouldPersistTaps="handled">
+          {children}
+        </ScrollView>
+        {footer}
+      </SafeAreaView>
+    </GlassBackground>
   );
 }
 
@@ -196,23 +229,74 @@ export const st = StyleSheet.create({
   flex: { flex: 1 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingTop: 8, paddingBottom: 6, gap: 8 },
-  back: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.line },
+  back: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255, 255, 255, 0.90)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(231, 223, 211, 0.85)',
+  },
   title: { fontSize: 22, fontWeight: '800', color: colors.ink },
   subtitle: { fontSize: 12, color: colors.sub, marginTop: 2 },
   body: { padding: 16, paddingBottom: 40, gap: 12 },
   btn: { minHeight: 52, borderRadius: 14, borderWidth: 1.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16 },
   btnTxt: { fontSize: 16, fontWeight: '700' },
-  card: { backgroundColor: '#fff', borderRadius: 16, padding: 14, borderWidth: 1, borderColor: colors.line, gap: 8 },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.90)',
+    borderRadius: 16,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    gap: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
   chip: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 20, alignSelf: 'flex-start' },
   chipTxt: { fontSize: 11, fontWeight: '800', letterSpacing: 0.3 },
   label: { fontSize: 11, fontWeight: '700', color: colors.sub, textTransform: 'uppercase', letterSpacing: 0.6 },
   h: { fontSize: 17, fontWeight: '800', color: colors.ink },
   muted: { fontSize: 13, color: colors.sub },
-  stat: { flex: 1, backgroundColor: '#fff', borderRadius: 14, padding: 12, borderWidth: 1, borderColor: colors.line, gap: 2 },
+  stat: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.90)',
+    borderRadius: 14,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    gap: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 1,
+  },
   statVal: { fontSize: 24, fontWeight: '800', color: colors.ink },
-  choice: { paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12, borderWidth: 1.5, borderColor: colors.line, backgroundColor: '#fff', minWidth: 54, alignItems: 'center' },
+  choice: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: colors.line,
+    backgroundColor: 'rgba(255, 255, 255, 0.90)',
+    minWidth: 54,
+    alignItems: 'center',
+  },
   choiceTxt: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  input: { backgroundColor: '#fff', borderWidth: 1.5, borderColor: colors.line, borderRadius: 12, paddingHorizontal: 14, minHeight: 50, fontSize: 16, color: colors.ink },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.93)',
+    borderWidth: 1.5,
+    borderColor: colors.line,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    minHeight: 50,
+    fontSize: 16,
+    color: colors.ink,
+  },
   progBg: { height: 8, borderRadius: 4, backgroundColor: '#EADFD0', overflow: 'hidden' },
   progFill: { height: 8, borderRadius: 4, backgroundColor: colors.accent },
 });

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Field, Button } from '../../components/UI';
+import { Field, Button, GlassBackground } from '../../components/UI';
 import { colors } from '../../theme';
 import { useAuth } from '../../context/AuthContext';
 import { friendlyErr } from '../../utils';
@@ -33,14 +33,15 @@ export default function CustomerLogin({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={st.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={st.scroll} keyboardShouldPersistTaps="handled">
+    <GlassBackground>
+      <SafeAreaView style={st.safe}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={st.scroll} keyboardShouldPersistTaps="handled">
 
-          {/* Back */}
-          <TouchableOpacity onPress={() => navigation.goBack()} style={st.back}>
-            <Ionicons name="chevron-back" size={22} color={colors.ink} />
-          </TouchableOpacity>
+            {/* Back */}
+            <TouchableOpacity onPress={() => navigation.goBack()} style={st.back}>
+              <Ionicons name="chevron-back" size={22} color={colors.ink} />
+            </TouchableOpacity>
 
           {/* Header */}
           <View style={st.header}>
@@ -51,8 +52,8 @@ export default function CustomerLogin({ navigation }) {
             <Text style={st.subtitle}>Sign in to your DineFlow account</Text>
           </View>
 
-          {/* Form */}
-          <View style={st.form}>
+          {/* Form Card */}
+          <View style={st.card}>
             <Field
               label="Email address"
               value={email}
@@ -86,33 +87,34 @@ export default function CustomerLogin({ navigation }) {
             ) : null}
 
             <Button title="Sign In" onPress={login} loading={busy} style={{ marginTop: 4 }} />
-
-            <TouchableOpacity onPress={() => navigation.navigate('CustomerRegister')} style={{ alignItems: 'center', marginTop: 20 }}>
-              <Text style={{ color: colors.sub, fontSize: 14 }}>
-                Don't have an account?{' '}
-                <Text style={{ color: colors.accent, fontWeight: '800' }}>Create Account</Text>
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('StaffLogin')} style={{ alignItems: 'center', marginTop: 8 }}>
-              <Text style={{ color: colors.sub, fontSize: 13 }}>
-                Restaurant staff?{' '}
-                <Text style={{ color: colors.ink, fontWeight: '700', textDecorationLine: 'underline' }}>Staff Login</Text>
-              </Text>
-            </TouchableOpacity>
           </View>
+
+          <TouchableOpacity onPress={() => navigation.navigate('CustomerRegister')} style={{ alignItems: 'center', marginTop: 20 }}>
+            <Text style={{ color: colors.ink, fontSize: 14, fontWeight: '600' }}>
+              Don't have an account?{' '}
+              <Text style={{ color: colors.accent, fontWeight: '800' }}>Create Account</Text>
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('StaffLogin')} style={{ alignItems: 'center', marginTop: 10 }}>
+            <Text style={{ color: colors.ink, fontSize: 13, fontWeight: '600' }}>
+              Restaurant staff?{' '}
+              <Text style={{ color: colors.accent, fontWeight: '800' }}>Staff Login</Text>
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
+  </GlassBackground>
   );
 }
 
 const st = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.bg },
+  safe: { flex: 1, backgroundColor: 'transparent' },
   scroll: { padding: 20, paddingBottom: 48 },
   back: {
     width: 40, height: 40, borderRadius: 20,
-    backgroundColor: '#fff', borderWidth: 1, borderColor: '#E5E0D6',
+    backgroundColor: 'rgba(255, 255, 255, 0.90)', borderWidth: 1, borderColor: '#E5E0D6',
     alignItems: 'center', justifyContent: 'center', marginBottom: 16,
   },
   header: { alignItems: 'center', marginBottom: 32, gap: 8 },
@@ -125,6 +127,18 @@ const st = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '900', color: colors.ink },
   subtitle: { fontSize: 14, color: colors.sub },
   form: { gap: 14 },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    borderRadius: 22,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+    gap: 14,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 3,
+  },
   eyeBtn: { position: 'absolute', right: 14, bottom: 14 },
   errBox: {
     flexDirection: 'row', alignItems: 'center', gap: 6,

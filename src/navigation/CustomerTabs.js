@@ -40,11 +40,16 @@ export default function CustomerTabs({ navigation }) {
 
   return (
     <Tab.Navigator
+      sceneContainerStyle={{ backgroundColor: 'transparent' }}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.sub,
-        tabBarStyle: { backgroundColor: '#fff', borderTopColor: colors.line },
+        tabBarStyle: {
+          backgroundColor: 'rgba(255, 255, 255, 0.92)',
+          borderTopColor: 'rgba(231, 223, 211, 0.8)',
+          elevation: 8,
+        },
         tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
         tabBarIcon: ({ focused, color, size }) => <Ionicons name={icons[route.name][focused ? 0 : 1]} size={size} color={color} />,
       })}

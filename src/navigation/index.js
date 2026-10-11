@@ -36,7 +36,7 @@ export default function RootNavigator() {
   if (!ready) return <View style={{ flex: 1, backgroundColor: colors.bg }}><Loading /></View>;
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
       {!user ? (
         <>
           <Stack.Screen name="Splash" component={Splash} />

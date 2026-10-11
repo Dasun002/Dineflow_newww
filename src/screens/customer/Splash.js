@@ -10,6 +10,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { height } = Dimensions.get('window');
 
+const RESTAURANT_BG = require('../../../assets/restaurant-bg.jpg');
+
 export default function Splash({ navigation }) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(60)).current;
@@ -25,9 +27,9 @@ export default function Splash({ navigation }) {
     <View style={st.container}>
       {/* Full-screen hero image */}
       <ImageBackground
-        source={{ uri: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80' }}
+        source={RESTAURANT_BG}
         style={st.hero}
-        imageStyle={{ opacity: 0.75 }}
+        imageStyle={{ opacity: 0.85 }}
       >
         <View style={st.overlay} />
 
